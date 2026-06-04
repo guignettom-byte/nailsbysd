@@ -10,9 +10,5 @@ export default function ClientSessionProvider({
   children: React.ReactNode;
   session: Session | null;
 }) {
-  return (
-    <SessionProvider session={session} basePath="/api/auth-client">
-      {children}
-    </SessionProvider>
-  );
+  return <SessionProvider session={session}>{children}</SessionProvider>;
 }

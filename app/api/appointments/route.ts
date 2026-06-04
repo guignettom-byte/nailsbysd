@@ -10,9 +10,9 @@ import { getToken } from "next-auth/jwt";
 
 export async function POST(req: NextRequest) {
   try {
-    // Authenticate client
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-    if (!token?.clientId) {
+
+    if (!token || token.role !== "CLIENT") {
       return NextResponse.json({ error: "Connexion requise", redirect: "/connexion" }, { status: 401 });
     }
 
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Champs obligatoires manquants" }, { status: 400 });
     }
 
-    const client = await prisma.client.findUnique({ where: { id: token.clientId as string } });
+    const client = await prisma.client.findUnique({ where: { id: token.userId as string } });
     if (!client) return NextResponse.json({ error: "Client introuvable" }, { status: 404 });
 
     const service = await prisma.service.findUnique({ where: { id: serviceId } });
@@ -77,10 +77,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Admin: list appointments
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const role = (session?.user as { role?: string })?.role;
+  if (!session || role !== "ADMIN") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { searchParams } = new URL(req.url);
   const status = searchParams.get("status");

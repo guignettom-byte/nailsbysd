@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
-import { clientAuthOptions } from "@/lib/client-auth";
+import { authOptions } from "@/lib/auth";
 import ClientSessionProvider from "@/components/ClientSessionProvider";
 
 export const metadata: Metadata = {
@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(clientAuthOptions);
-
+  const session = await getServerSession(authOptions);
   return (
     <html lang="fr" className="h-full scroll-smooth">
       <body className="min-h-full flex flex-col antialiased">

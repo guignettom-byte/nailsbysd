@@ -4,12 +4,13 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  if (!token?.clientId) {
+
+  if (!token || token.role !== "CLIENT") {
     return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
   }
 
   const client = await prisma.client.findUnique({
-    where: { id: token.clientId as string },
+    where: { id: token.userId as string },
     include: {
       appointments: {
         include: { service: true },

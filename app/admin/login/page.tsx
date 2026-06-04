@@ -18,7 +18,7 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    const res = await signIn("credentials", {
+    const res = await signIn("admin-credentials", {
       email,
       password,
       redirect: false,
@@ -43,27 +43,13 @@ export default function LoginPage() {
 
         <div className="bg-white p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <Input
-              id="email"
-              label="Email"
-              type="email"
-              value={email}
+            <Input id="email" label="Email" type="email" value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@nailsbysd.ch"
-              required
-            />
-            <Input
-              id="password"
-              label="Mot de passe"
-              type="password"
-              value={password}
+              placeholder="admin@nailsbysd.ch" required />
+            <Input id="password" label="Mot de passe" type="password" value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
-            {error && (
-              <p className="text-xs text-red-500 text-center">{error}</p>
-            )}
+              placeholder="••••••••" required />
+            {error && <p className="text-xs text-red-500 text-center">{error}</p>}
             <Button type="submit" size="lg" className="w-full" disabled={loading}>
               {loading ? "Connexion…" : "Se connecter"}
             </Button>
