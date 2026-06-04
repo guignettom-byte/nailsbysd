@@ -17,6 +17,19 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Client {
+  id           String        @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String        @unique
+  phone        String
+  password     String
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+}
+
 model Service {
   id           String        @id @default(cuid())
   name         String
@@ -31,16 +44,15 @@ model Service {
 
 model Appointment {
   id           String   @id @default(cuid())
-  firstName    String
-  lastName     String
-  email        String
-  phone        String
-  comment      String?
+  clientId     String
+  client       Client   @relation(fields: [clientId], references: [id])
   serviceId    String
   service      Service  @relation(fields: [serviceId], references: [id])
+  comment      String?
   date         DateTime
   endTime      DateTime
-  status       String   @default("PENDING")
+  price        Float
+  status       String   @default("CONFIRMED")
   reminderSent Boolean  @default(false)
   smsSent      Boolean  @default(false)
   createdAt    DateTime @default(now())

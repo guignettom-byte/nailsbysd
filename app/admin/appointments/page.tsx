@@ -21,7 +21,7 @@ export default async function AppointmentsPage({
       ...(status && status !== "all" ? { status } : {}),
       date: { gte: new Date() },
     },
-    include: { service: true },
+    include: { service: true, client: true },
     orderBy: { date: "asc" },
   });
 
@@ -90,14 +90,16 @@ export default async function AppointmentsPage({
                       <p className="text-gray-400 text-xs">{format(new Date(appt.date), "HH:mm")} – {format(new Date(appt.endTime), "HH:mm")}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="font-medium text-[#2a2018]">{appt.firstName} {appt.lastName}</p>
-                      <p className="text-gray-400 text-xs">{appt.email}</p>
+                      <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] hover:text-[#b8975a] transition-colors">
+                        {appt.client.firstName} {appt.client.lastName}
+                      </a>
+                      <p className="text-gray-400 text-xs">{appt.client.email}</p>
                     </td>
                     <td className="px-6 py-4">
                       <p className="text-[#2a2018]">{appt.service.name}</p>
                       <p className="text-gray-400 text-xs">{appt.service.duration} min</p>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">{appt.phone}</td>
+                    <td className="px-6 py-4 text-gray-600">{appt.client.phone}</td>
                     <td className="px-6 py-4">
                       <span className={`text-xs px-2 py-1 ${statusColor[appt.status] || "bg-gray-100 text-gray-500"}`}>
                         {statusLabel[appt.status] || appt.status}

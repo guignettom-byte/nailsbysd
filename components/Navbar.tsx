@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 function InstagramIcon({ size = 18 }: { size?: number }) {
   return (
@@ -17,6 +18,7 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -31,11 +33,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#faf6f1]/95 backdrop-blur-sm shadow-sm py-3" : "bg-transparent py-5"
-      }`}
-    >
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#faf6f1]/95 backdrop-blur-sm shadow-sm py-3" : "bg-transparent py-5"}`}>
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="font-display text-2xl text-[#2a2018] tracking-wide">
           Nailsbysd
@@ -44,30 +42,34 @@ export default function Navbar() {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-xs tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a] transition-colors"
-            >
+            <a key={l.href} href={l.href}
+              className="text-xs tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a] transition-colors">
               {l.label}
             </a>
           ))}
-          <a
-            href="https://www.instagram.com/nailsbysd"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#2a2018]/50 hover:text-[#b8975a] transition-colors"
-          >
+
+          {/* Account link */}
+          {session ? (
+            <Link href="/mon-compte"
+              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#b8975a] hover:text-[#2a2018] transition-colors">
+              <User size={15} />
+              {session.user?.name?.split(" ")[0]}
+            </Link>
+          ) : (
+            <Link href="/connexion"
+              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#2a2018]/50 hover:text-[#b8975a] transition-colors">
+              <User size={15} />
+              Mon compte
+            </Link>
+          )}
+
+          <a href="https://www.instagram.com/nailsbysd" target="_blank" rel="noopener noreferrer"
+            className="text-[#2a2018]/50 hover:text-[#b8975a] transition-colors">
             <InstagramIcon size={18} />
           </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden text-[#2a2018]"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
+        <button className="md:hidden text-[#2a2018]" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -76,15 +78,15 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden bg-[#faf6f1] border-t border-[#e8d5c4] px-6 py-6 flex flex-col gap-5">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-sm tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a]"
-            >
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+              className="text-sm tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a]">
               {l.label}
             </a>
           ))}
+          <Link href={session ? "/mon-compte" : "/connexion"} onClick={() => setOpen(false)}
+            className="text-sm tracking-widest uppercase text-[#b8975a]">
+            {session ? `Mon compte (${session.user?.name?.split(" ")[0]})` : "Se connecter"}
+          </Link>
         </div>
       )}
     </nav>

@@ -19,12 +19,12 @@ export default async function AdminDashboard() {
   const [todayAppts, upcomingAppts, totalThisMonth, pendingCount] = await Promise.all([
     prisma.appointment.findMany({
       where: { date: { gte: todayStart, lte: todayEnd }, status: { not: "CANCELLED" } },
-      include: { service: true },
+      include: { service: true, client: true },
       orderBy: { date: "asc" },
     }),
     prisma.appointment.findMany({
       where: { date: { gte: now, lte: weekEnd }, status: { not: "CANCELLED" } },
-      include: { service: true },
+      include: { service: true, client: true },
       orderBy: { date: "asc" },
       take: 10,
     }),
@@ -129,7 +129,7 @@ function AppointmentRow({
   appt,
   showDate = false,
 }: {
-  appt: { id: string; firstName: string; lastName: string; phone: string; date: Date; status: string; service: { name: string; duration: number } };
+  appt: { id: string; date: Date; status: string; client: { id: string; firstName: string; lastName: string; phone: string }; service: { name: string } };
   showDate?: boolean;
 }) {
   const statusColors: Record<string, string> = {
@@ -141,9 +141,9 @@ function AppointmentRow({
   return (
     <div className="px-6 py-4 flex items-center justify-between gap-4">
       <div className="flex-1 min-w-0">
-        <p className="font-medium text-[#2a2018] truncate">
-          {appt.firstName} {appt.lastName}
-        </p>
+        <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] truncate hover:text-[#b8975a] transition-colors block">
+          {appt.client.firstName} {appt.client.lastName}
+        </a>
         <p className="text-sm text-gray-500">{appt.service.name}</p>
       </div>
       <div className="text-right shrink-0">
@@ -155,7 +155,7 @@ function AppointmentRow({
         <p className="text-sm font-medium text-[#2a2018]">
           {format(new Date(appt.date), "HH:mm")}
         </p>
-        <p className="text-xs text-gray-400">{appt.phone}</p>
+        <p className="text-xs text-gray-400">{appt.client.phone}</p>
       </div>
       <span className={`text-xs px-2 py-1 ${statusColors[appt.status] || "bg-gray-100 text-gray-500"}`}>
         {appt.status === "CONFIRMED" ? "Confirmé" : appt.status === "PENDING" ? "En attente" : "Annulé"}

@@ -6,20 +6,28 @@ import { createCalendarEvent } from "@/lib/google-calendar";
 import { addMinutes } from "date-fns";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { getToken } from "next-auth/jwt";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { firstName, lastName, email, phone, comment, serviceId, date: dateStr } = body;
+    // Authenticate client
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    if (!token?.clientId) {
+      return NextResponse.json({ error: "Connexion requise", redirect: "/connexion" }, { status: 401 });
+    }
 
-    if (!firstName || !lastName || !email || !phone || !serviceId || !dateStr) {
+    const body = await req.json();
+    const { serviceId, date: dateStr, comment } = body;
+
+    if (!serviceId || !dateStr) {
       return NextResponse.json({ error: "Champs obligatoires manquants" }, { status: 400 });
     }
 
+    const client = await prisma.client.findUnique({ where: { id: token.clientId as string } });
+    if (!client) return NextResponse.json({ error: "Client introuvable" }, { status: 404 });
+
     const service = await prisma.service.findUnique({ where: { id: serviceId } });
-    if (!service) {
-      return NextResponse.json({ error: "Prestation introuvable" }, { status: 404 });
-    }
+    if (!service) return NextResponse.json({ error: "Prestation introuvable" }, { status: 404 });
 
     const date = new Date(dateStr);
     const endTime = addMinutes(date, service.duration);
@@ -31,24 +39,21 @@ export async function POST(req: NextRequest) {
 
     const appointment = await prisma.appointment.create({
       data: {
-        firstName,
-        lastName,
-        email,
-        phone,
-        comment,
+        clientId: client.id,
         serviceId,
+        comment,
         date,
         endTime,
+        price: service.price,
         status: "CONFIRMED",
       },
     });
 
-    // Send emails (non-blocking)
     const emailData = {
-      firstName,
-      lastName,
-      email,
-      phone,
+      firstName: client.firstName,
+      lastName: client.lastName,
+      email: client.email,
+      phone: client.phone,
       serviceName: service.name,
       date,
       endTime,
@@ -58,8 +63,8 @@ export async function POST(req: NextRequest) {
       sendConfirmationEmail(emailData).catch(console.error),
       sendAdminNotification(emailData).catch(console.error),
       createCalendarEvent({
-        summary: `RDV — ${firstName} ${lastName} (${service.name})`,
-        description: `Tel: ${phone}\nEmail: ${email}${comment ? `\nNote: ${comment}` : ""}`,
+        summary: `RDV — ${client.firstName} ${client.lastName} (${service.name})`,
+        description: `Tel: ${client.phone}\nEmail: ${client.email}${comment ? `\nNote: ${comment}` : ""}`,
         startTime: date,
         endTime,
       }).catch(console.error),
@@ -84,11 +89,11 @@ export async function GET(req: NextRequest) {
 
   const appointments = await prisma.appointment.findMany({
     where: {
-      ...(status && { status }),
-      ...(from && { date: { gte: new Date(from) } }),
-      ...(to && { date: { lte: new Date(to) } }),
+      ...(status && status !== "all" ? { status } : {}),
+      ...(from ? { date: { gte: new Date(from) } } : {}),
+      ...(to ? { date: { lte: new Date(to) } } : {}),
     },
-    include: { service: true },
+    include: { service: true, client: true },
     orderBy: { date: "asc" },
   });
 

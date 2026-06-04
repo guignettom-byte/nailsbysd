@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/appointments", icon: Calendar, label: "Rendez-vous" },
+  { href: "/admin/clients", icon: Users, label: "Clients" },
   { href: "/admin/services", icon: Scissors, label: "Prestations" },
   { href: "/admin/blocked-days", icon: BanIcon, label: "Jours bloqués" },
   { href: "/admin/working-hours", icon: Settings, label: "Horaires" },
