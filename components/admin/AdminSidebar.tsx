@@ -23,6 +23,20 @@ const navItems = [
   { href: "/admin/working-hours", icon: Settings, label: "Horaires" },
 ];
 
+function SignOutButton() {
+  return (
+    <button
+      onClick={async () => {
+        await signOut({ callbackUrl: "/admin/login", redirect: true });
+      }}
+      className="flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:text-white w-full transition-colors"
+    >
+      <LogOut size={18} />
+      Se déconnecter
+    </button>
+  );
+}
+
 export default function AdminSidebar() {
   const pathname = usePathname();
 
@@ -59,13 +73,7 @@ export default function AdminSidebar() {
 
       {/* Logout */}
       <div className="p-4 border-t border-white/10">
-        <button
-          onClick={() => signOut({ callbackUrl: "/admin/login" })}
-          className="flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:text-white w-full transition-colors"
-        >
-          <LogOut size={18} />
-          Se déconnecter
-        </button>
+        <SignOutButton />
         <Link
           href="/"
           className="flex items-center gap-3 px-4 py-3 text-sm text-white/40 hover:text-white/60 transition-colors"
