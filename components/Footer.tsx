@@ -18,7 +18,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="font-display text-3xl text-white mb-3">Nailsbysd</h3>
-            <p className="text-xs tracking-[0.3em] uppercase text-[#b8975a] mb-4">Prothésiste Ongulaire</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-[#78716c] mb-4">Prothésiste Ongulaire</p>
             <p className="text-sm leading-relaxed">
               L'art de sublimer vos mains avec délicatesse et savoir-faire, à Cheseaux-sur-Lausanne.
             </p>
@@ -29,17 +29,17 @@ export default function Footer() {
             <h4 className="text-xs tracking-widest uppercase text-white mb-6">Contact</h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
-                <MapPin size={16} className="text-[#b8975a] mt-0.5 shrink-0" />
+                <MapPin size={16} className="text-[#78716c] mt-0.5 shrink-0" />
                 <span>Cheseaux-sur-Lausanne<br />Canton de Vaud, Suisse</span>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={16} className="text-[#b8975a] shrink-0" />
+                <Mail size={16} className="text-[#78716c] shrink-0" />
                 <a href="mailto:contact@nailsbysd.ch" className="hover:text-white transition-colors">
                   contact@nailsbysd.ch
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-[#b8975a] shrink-0"><InstagramIcon size={16} /></span>
+                <span className="text-[#78716c] shrink-0"><InstagramIcon size={16} /></span>
                 <a
                   href="https://www.instagram.com/nailsbysd"
                   target="_blank"

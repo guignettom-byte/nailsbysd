@@ -52,9 +52,9 @@ export default function ServicesSection({ services }: ServicesProps) {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.4em] uppercase text-[#b8975a] mb-4 font-body">Savoir-faire</p>
+          <p className="text-xs tracking-[0.4em] uppercase text-[#78716c] mb-4 font-body">Savoir-faire</p>
           <h2 className="font-display text-5xl md:text-6xl text-[#2a2018] mb-6">Nos Prestations</h2>
-          <div className="h-px w-16 bg-[#b8975a] mx-auto" />
+          <div className="h-px w-16 bg-[#78716c] mx-auto" />
         </div>
 
         {/* Grid */}
@@ -67,7 +67,7 @@ export default function ServicesSection({ services }: ServicesProps) {
                 className="bg-white p-10 group hover:bg-[#faf6f1] transition-colors duration-300"
               >
                 <div className="flex items-start gap-6">
-                  <div className="w-10 h-10 flex items-center justify-center text-[#b8975a] group-hover:scale-110 transition-transform shrink-0 mt-1">
+                  <div className="w-10 h-10 flex items-center justify-center text-[#78716c] group-hover:scale-110 transition-transform shrink-0 mt-1">
                     <Icon size={24} strokeWidth={1.5} />
                   </div>
                   <div className="flex-1">
@@ -79,7 +79,7 @@ export default function ServicesSection({ services }: ServicesProps) {
                       <span className="text-xs tracking-widest uppercase text-[#2a2018]/40 font-body">
                         {formatDuration(service.duration)}
                       </span>
-                      <span className="font-display text-2xl text-[#b8975a]">
+                      <span className="font-display text-2xl text-[#78716c]">
                         {formatPrice(service.price)}
                       </span>
                     </div>
@@ -88,7 +88,7 @@ export default function ServicesSection({ services }: ServicesProps) {
                 <div className="mt-6 pt-6 border-t border-[#e8d5c4]">
                   <a
                     href="#reservation"
-                    className="text-xs tracking-widest uppercase text-[#b8975a] font-body hover:text-[#2a2018] transition-colors"
+                    className="text-xs tracking-widest uppercase text-[#78716c] font-body hover:text-[#2a2018] transition-colors"
                   >
                     Réserver cette prestation →
                   </a>

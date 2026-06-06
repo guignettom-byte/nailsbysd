@@ -95,7 +95,7 @@ export default function ServicesManager({ initialServices }: { initialServices: 
                   </div>
                   <div className="flex items-center gap-2">
                     {!service.active && <span className="text-xs text-red-400">Inactif</span>}
-                    <button onClick={() => startEdit(service)} className="p-2 text-gray-400 hover:text-[#b8975a]">
+                    <button onClick={() => startEdit(service)} className="p-2 text-gray-400 hover:text-[#78716c]">
                       <Pencil size={16} />
                     </button>
                     {service.active && (
@@ -112,7 +112,7 @@ export default function ServicesManager({ initialServices }: { initialServices: 
       </div>
 
       {creating ? (
-        <div className="bg-white border border-[#b8975a] p-6">
+        <div className="bg-white border border-[#78716c] p-6">
           <h3 className="font-display text-xl text-[#2a2018] mb-4">Nouvelle prestation</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
             <Input label="Nom *" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Ex: Manucure" />

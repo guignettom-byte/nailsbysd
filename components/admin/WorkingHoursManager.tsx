@@ -86,7 +86,7 @@ export default function WorkingHoursManager({
                 onChange={(e) => updateDay(hour.dayOfWeek, "active", e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-[#b8975a] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all" />
+              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:bg-[#78716c] after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all" />
             </label>
             {hour.active ? (
               <div className="flex items-center gap-3 flex-1">
@@ -94,14 +94,14 @@ export default function WorkingHoursManager({
                   type="time"
                   value={hour.startTime}
                   onChange={(e) => updateDay(hour.dayOfWeek, "startTime", e.target.value)}
-                  className="border-b border-gray-200 py-1 text-sm focus:outline-none focus:border-[#b8975a] w-24"
+                  className="border-b border-gray-200 py-1 text-sm focus:outline-none focus:border-[#78716c] w-24"
                 />
                 <span className="text-gray-300 text-sm">–</span>
                 <input
                   type="time"
                   value={hour.endTime}
                   onChange={(e) => updateDay(hour.dayOfWeek, "endTime", e.target.value)}
-                  className="border-b border-gray-200 py-1 text-sm focus:outline-none focus:border-[#b8975a] w-24"
+                  className="border-b border-gray-200 py-1 text-sm focus:outline-none focus:border-[#78716c] w-24"
                 />
               </div>
             ) : (

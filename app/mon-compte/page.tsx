@@ -63,7 +63,7 @@ export default function MonComptePage() {
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-[#faf6f1] flex items-center justify-center">
-        <p className="text-[#b8975a] text-sm">Chargement…</p>
+        <p className="text-[#78716c] text-sm">Chargement…</p>
       </div>
     );
   }
@@ -83,7 +83,7 @@ export default function MonComptePage() {
         <Link href="/" className="font-display text-2xl text-[#2a2018]">Nailsbysd</Link>
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
-          className="flex items-center gap-2 text-xs text-[#2a2018]/50 hover:text-[#b8975a] uppercase tracking-widest transition-colors"
+          className="flex items-center gap-2 text-xs text-[#2a2018]/50 hover:text-[#78716c] uppercase tracking-widest transition-colors"
         >
           <LogOut size={14} />
           Déconnexion
@@ -93,7 +93,7 @@ export default function MonComptePage() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Welcome */}
         <div className="mb-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#b8975a] mb-2">Mon espace</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#78716c] mb-2">Mon espace</p>
           <h1 className="font-display text-5xl text-[#2a2018]">
             Bonjour, {client.firstName} ✨
           </h1>
@@ -102,11 +102,11 @@ export default function MonComptePage() {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-10">
           <div className="bg-white p-5 text-center">
-            <p className="font-display text-3xl text-[#b8975a]">{past.length}</p>
+            <p className="font-display text-3xl text-[#78716c]">{past.length}</p>
             <p className="text-xs text-[#2a2018]/50 uppercase tracking-widest mt-1">Visites</p>
           </div>
           <div className="bg-white p-5 text-center">
-            <p className="font-display text-3xl text-[#b8975a]">{upcoming.length}</p>
+            <p className="font-display text-3xl text-[#78716c]">{upcoming.length}</p>
             <p className="text-xs text-[#2a2018]/50 uppercase tracking-widest mt-1">À venir</p>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function MonComptePage() {
           </div>
           <Link
             href="/#reservation"
-            className="flex items-center gap-2 px-6 py-3 bg-[#b8975a] text-white text-xs uppercase tracking-widest hover:bg-white hover:text-[#2a2018] transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-[#78716c] text-white text-xs uppercase tracking-widest hover:bg-white hover:text-[#2a2018] transition-colors"
           >
             Réserver <ChevronRight size={14} />
           </Link>
@@ -182,7 +182,7 @@ export default function MonComptePage() {
 
 function AppointmentCard({ appt, highlight = false }: { appt: Appointment; highlight?: boolean }) {
   return (
-    <div className={`bg-white p-5 flex items-center justify-between gap-4 ${highlight ? "border-l-4 border-[#b8975a]" : ""}`}>
+    <div className={`bg-white p-5 flex items-center justify-between gap-4 ${highlight ? "border-l-4 border-[#78716c]" : ""}`}>
       <div className="flex-1">
         <p className="font-display text-lg text-[#2a2018]">{appt.service.name}</p>
         <div className="flex items-center gap-4 mt-1">
@@ -197,7 +197,7 @@ function AppointmentCard({ appt, highlight = false }: { appt: Appointment; highl
         </div>
       </div>
       <div className="text-right shrink-0 space-y-1">
-        <p className="font-display text-lg text-[#b8975a]">{formatPrice(appt.price)}</p>
+        <p className="font-display text-lg text-[#78716c]">{formatPrice(appt.price)}</p>
         <span className={`text-xs px-2 py-0.5 ${STATUS_COLOR[appt.status] || "bg-gray-100 text-gray-500"}`}>
           {STATUS_LABEL[appt.status] || appt.status}
         </span>

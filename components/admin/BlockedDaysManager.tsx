@@ -99,7 +99,7 @@ export default function BlockedDaysManager({
               <select
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="w-full border-b border-gray-200 py-2 text-sm focus:outline-none focus:border-[#b8975a]"
+                className="w-full border-b border-gray-200 py-2 text-sm focus:outline-none focus:border-[#78716c]"
               >
                 {REASONS.map((r) => (
                   <option key={r.value} value={r.value}>{r.label}</option>
@@ -112,7 +112,7 @@ export default function BlockedDaysManager({
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
                 placeholder="Ex: Formation nail art avancé"
-                className="w-full border-b border-gray-200 py-2 text-sm focus:outline-none focus:border-[#b8975a]"
+                className="w-full border-b border-gray-200 py-2 text-sm focus:outline-none focus:border-[#78716c]"
               />
             </div>
             <Button onClick={addBlockedDay} disabled={loading} className="w-full">

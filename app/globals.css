@@ -3,8 +3,8 @@
 
 :root {
   --nude: #e8d5c4;
-  --gold: #b8975a;
-  --gold-light: #d4af7a;
+  --accent: #78716c;
+  --accent-light: #a8a29e;
   --charcoal: #2a2018;
   --cream: #faf6f1;
   --background: #faf6f1;
@@ -42,27 +42,27 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--cream);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: var(--accent);
   border-radius: 3px;
 }
 
 .rdp {
-  --rdp-accent-color: #b8975a;
+  --rdp-accent-color: #78716c;
   --rdp-background-color: #f5ede4;
   margin: 0;
 }
 
 .rdp-day_selected,
 .rdp-day_selected:hover {
-  background-color: #b8975a !important;
+  background-color: #78716c !important;
   color: white !important;
 }
 
 .rdp-day:hover:not([disabled]) {
-  background-color: #f5ede4 !important;
+  background-color: #ebebea !important;
 }
 
 .rdp-day_today {
   font-weight: 700;
-  color: #b8975a;
+  color: #78716c;
 }

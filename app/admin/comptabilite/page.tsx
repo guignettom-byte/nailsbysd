@@ -135,10 +135,10 @@ export default async function ComptabilitePage() {
                     <div className="w-2 h-2 bg-[#2a2018] rotate-45 -mt-1" />
                   </div>
                   <div
-                    className={`w-full transition-all ${isCurrent ? "bg-[#b8975a]" : "bg-[#e8d5c4] group-hover:bg-[#b8975a]/60"}`}
+                    className={`w-full transition-all ${isCurrent ? "bg-[#78716c]" : "bg-[#e8d5c4] group-hover:bg-[#78716c]/60"}`}
                     style={{ height: `${height}%`, minHeight: m.ca > 0 ? "4px" : "0" }}
                   />
-                  <span className={`text-xs capitalize ${isCurrent ? "text-[#b8975a] font-medium" : "text-gray-400"}`}>
+                  <span className={`text-xs capitalize ${isCurrent ? "text-[#78716c] font-medium" : "text-gray-400"}`}>
                     {m.label}
                   </span>
                 </div>
@@ -160,10 +160,10 @@ export default async function ComptabilitePage() {
                   <div key={s.name}>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-[#2a2018] truncate pr-2">{s.name}</span>
-                      <span className="text-[#b8975a] font-display shrink-0">{formatPrice(s.total)}</span>
+                      <span className="text-[#78716c] font-display shrink-0">{formatPrice(s.total)}</span>
                     </div>
                     <div className="h-1.5 bg-[#f0e6d8] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#b8975a] rounded-full" style={{ width: `${pct}%` }} />
+                      <div className="h-full bg-[#78716c] rounded-full" style={{ width: `${pct}%` }} />
                     </div>
                     <p className="text-xs text-gray-400 mt-0.5">{s.count} RDV · {pct.toFixed(0)}%</p>
                   </div>
@@ -196,10 +196,10 @@ export default async function ComptabilitePage() {
                   <tr key={i} className={isCurrent ? "bg-[#faf6f1]" : "hover:bg-gray-50"}>
                     <td className="px-6 py-3 capitalize font-medium text-[#2a2018]">
                       {format(m.month, "MMMM yyyy", { locale: fr })}
-                      {isCurrent && <span className="ml-2 text-xs bg-[#b8975a] text-white px-1.5 py-0.5">En cours</span>}
+                      {isCurrent && <span className="ml-2 text-xs bg-[#78716c] text-white px-1.5 py-0.5">En cours</span>}
                     </td>
                     <td className="px-6 py-3 text-gray-600">{m.rdv}</td>
-                    <td className="px-6 py-3 font-display text-lg text-[#b8975a]">{formatPrice(m.ca)}</td>
+                    <td className="px-6 py-3 font-display text-lg text-[#78716c]">{formatPrice(m.ca)}</td>
                     <td className="px-6 py-3 text-gray-600">{pm > 0 ? formatPrice(pm) : "—"}</td>
                   </tr>
                 );
@@ -218,7 +218,7 @@ function KpiCard({ label, value, sub, gold }: {
   return (
     <div className="bg-white border border-gray-100 p-5">
       <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">{label}</p>
-      <p className={`font-display text-3xl mb-1 ${gold ? "text-[#b8975a]" : "text-[#2a2018]"}`}>{value}</p>
+      <p className={`font-display text-3xl mb-1 ${gold ? "text-[#78716c]" : "text-[#2a2018]"}`}>{value}</p>
       {sub}
     </div>
   );

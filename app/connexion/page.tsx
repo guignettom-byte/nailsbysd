@@ -42,7 +42,7 @@ function ConnexionForm() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <Link href="/" className="font-display text-4xl text-[#2a2018]">Nailsbysd</Link>
-          <p className="text-xs tracking-[0.3em] uppercase text-[#b8975a] mt-1">Mon espace client</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#78716c] mt-1">Mon espace client</p>
         </div>
 
         <div className="bg-white p-8">
@@ -62,12 +62,12 @@ function ConnexionForm() {
 
         <p className="text-center mt-6 text-sm text-[#2a2018]/50">
           Pas encore de compte ?{" "}
-          <Link href="/inscription" className="text-[#b8975a] hover:underline">
+          <Link href="/inscription" className="text-[#78716c] hover:underline">
             Créer mon compte
           </Link>
         </p>
         <p className="text-center mt-3">
-          <Link href="/" className="text-xs text-[#2a2018]/30 hover:text-[#b8975a] uppercase tracking-widest">
+          <Link href="/" className="text-xs text-[#2a2018]/30 hover:text-[#78716c] uppercase tracking-widest">
             ← Retour au site
           </Link>
         </p>

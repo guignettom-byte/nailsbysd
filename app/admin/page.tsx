@@ -55,7 +55,7 @@ export default async function AdminDashboard() {
       <div className="bg-white border border-gray-100 mb-8">
         <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
           <h2 className="font-display text-2xl text-[#2a2018]">Aujourd'hui</h2>
-          <Link href="/admin/appointments" className="text-xs text-[#b8975a] uppercase tracking-widest">
+          <Link href="/admin/appointments" className="text-xs text-[#78716c] uppercase tracking-widest">
             Tous les RDV →
           </Link>
         </div>
@@ -105,7 +105,7 @@ function StatCard({
   color: string;
 }) {
   const colors: Record<string, string> = {
-    gold: "text-[#b8975a] bg-[#faf6f1]",
+    gold: "text-[#78716c] bg-[#faf6f1]",
     nude: "text-[#2a2018] bg-[#e8d5c4]",
     green: "text-green-600 bg-green-50",
     orange: "text-orange-500 bg-orange-50",
@@ -138,7 +138,7 @@ function AppointmentRow({
   return (
     <div className="px-6 py-4 flex items-center justify-between gap-4">
       <div className="flex-1 min-w-0">
-        <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] truncate hover:text-[#b8975a] transition-colors block">
+        <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] truncate hover:text-[#78716c] transition-colors block">
           {appt.client.firstName} {appt.client.lastName}
         </a>
         <p className="text-sm text-gray-500">{appt.service.name}</p>

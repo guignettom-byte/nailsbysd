@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <a key={l.href} href={l.href}
-              className="text-xs tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a] transition-colors">
+              className="text-xs tracking-widest uppercase text-[#2a2018]/70 hover:text-[#78716c] transition-colors">
               {l.label}
             </a>
           ))}
@@ -51,20 +51,20 @@ export default function Navbar() {
           {/* Account link */}
           {session ? (
             <Link href="/mon-compte"
-              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#b8975a] hover:text-[#2a2018] transition-colors">
+              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#78716c] hover:text-[#2a2018] transition-colors">
               <User size={15} />
               {session.user?.name?.split(" ")[0]}
             </Link>
           ) : (
             <Link href="/connexion"
-              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#2a2018]/50 hover:text-[#b8975a] transition-colors">
+              className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#2a2018]/50 hover:text-[#78716c] transition-colors">
               <User size={15} />
               Mon compte
             </Link>
           )}
 
           <a href="https://www.instagram.com/nailsbysd" target="_blank" rel="noopener noreferrer"
-            className="text-[#2a2018]/50 hover:text-[#b8975a] transition-colors">
+            className="text-[#2a2018]/50 hover:text-[#78716c] transition-colors">
             <InstagramIcon size={18} />
           </a>
         </div>
@@ -79,12 +79,12 @@ export default function Navbar() {
         <div className="md:hidden bg-[#faf6f1] border-t border-[#e8d5c4] px-6 py-6 flex flex-col gap-5">
           {links.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-              className="text-sm tracking-widest uppercase text-[#2a2018]/70 hover:text-[#b8975a]">
+              className="text-sm tracking-widest uppercase text-[#2a2018]/70 hover:text-[#78716c]">
               {l.label}
             </a>
           ))}
           <Link href={session ? "/mon-compte" : "/connexion"} onClick={() => setOpen(false)}
-            className="text-sm tracking-widest uppercase text-[#b8975a]">
+            className="text-sm tracking-widest uppercase text-[#78716c]">
             {session ? `Mon compte (${session.user?.name?.split(" ")[0]})` : "Se connecter"}
           </Link>
         </div>

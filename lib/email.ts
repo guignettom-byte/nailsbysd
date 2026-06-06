@@ -38,10 +38,10 @@ export async function sendConfirmationEmail(data: AppointmentData) {
     html: `
       <div style="${emailStyles} max-width: 600px; margin: 0 auto; background: #faf6f1; padding: 40px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="font-family: Georgia, serif; color: #b8975a; font-size: 32px; margin: 0;">Nailsbysd</h1>
-          <p style="color: #b8975a; font-size: 12px; letter-spacing: 3px; text-transform: uppercase;">Prothésiste Ongulaire</p>
+          <h1 style="font-family: Georgia, serif; color: #78716c; font-size: 32px; margin: 0;">Nailsbysd</h1>
+          <p style="color: #78716c; font-size: 12px; letter-spacing: 3px; text-transform: uppercase;">Prothésiste Ongulaire</p>
         </div>
-        <div style="background: white; padding: 30px; border-left: 3px solid #b8975a;">
+        <div style="background: white; padding: 30px; border-left: 3px solid #78716c;">
           <p>Bonjour ${data.firstName},</p>
           <p>Votre rendez-vous a bien été enregistré. Voici le récapitulatif :</p>
           <table style="width: 100%; margin: 20px 0;">
@@ -56,7 +56,7 @@ export async function sendConfirmationEmail(data: AppointmentData) {
         </div>
         <p style="text-align: center; color: #888; font-size: 12px; margin-top: 30px;">
           Nailsbysd — Cheseaux-sur-Lausanne, Suisse<br>
-          <a href="https://www.instagram.com/nailsbysd" style="color: #b8975a;">@nailsbysd</a>
+          <a href="https://www.instagram.com/nailsbysd" style="color: #78716c;">@nailsbysd</a>
         </p>
       </div>
     `,
@@ -73,9 +73,9 @@ export async function sendReminderEmail(data: AppointmentData) {
     html: `
       <div style="${emailStyles} max-width: 600px; margin: 0 auto; background: #faf6f1; padding: 40px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="font-family: Georgia, serif; color: #b8975a; font-size: 32px; margin: 0;">Nailsbysd</h1>
+          <h1 style="font-family: Georgia, serif; color: #78716c; font-size: 32px; margin: 0;">Nailsbysd</h1>
         </div>
-        <div style="background: white; padding: 30px; border-left: 3px solid #b8975a;">
+        <div style="background: white; padding: 30px; border-left: 3px solid #78716c;">
           <p>Bonjour ${data.firstName},</p>
           <p>Ceci est un rappel pour votre rendez-vous <strong>demain à ${timeStr}</strong> pour <strong>${data.serviceName}</strong>.</p>
           <p>À très bientôt ✨</p>
@@ -94,7 +94,7 @@ export async function sendAdminNotification(data: AppointmentData) {
     subject: `Nouvelle réservation — ${data.firstName} ${data.lastName}`,
     html: `
       <div style="${emailStyles} max-width: 600px; margin: 0 auto; padding: 30px;">
-        <h2 style="color: #b8975a;">Nouvelle réservation</h2>
+        <h2 style="color: #78716c;">Nouvelle réservation</h2>
         <table style="width: 100%;">
           <tr><td style="padding: 6px 0; color: #888;">Client</td><td>${data.firstName} ${data.lastName}</td></tr>
           <tr><td style="padding: 6px 0; color: #888;">Email</td><td>${data.email}</td></tr>
@@ -102,7 +102,7 @@ export async function sendAdminNotification(data: AppointmentData) {
           <tr><td style="padding: 6px 0; color: #888;">Prestation</td><td>${data.serviceName}</td></tr>
           <tr><td style="padding: 6px 0; color: #888;">Date</td><td>${dateStr}</td></tr>
         </table>
-        <p><a href="${process.env.NEXTAUTH_URL}/admin" style="background: #b8975a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Voir dans l'admin</a></p>
+        <p><a href="${process.env.NEXTAUTH_URL}/admin" style="background: #78716c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Voir dans l'admin</a></p>
       </div>
     `,
   });

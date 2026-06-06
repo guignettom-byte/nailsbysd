@@ -164,9 +164,9 @@ export default function BookingSection({ services }: BookingSectionProps) {
     <section id="reservation" className="py-24 px-6 bg-[#faf6f1]">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.4em] uppercase text-[#b8975a] mb-4 font-body">En ligne, 24h/24</p>
+          <p className="text-xs tracking-[0.4em] uppercase text-[#78716c] mb-4 font-body">En ligne, 24h/24</p>
           <h2 className="font-display text-5xl md:text-6xl text-[#2a2018] mb-6">Réserver</h2>
-          <div className="h-px w-16 bg-[#b8975a] mx-auto" />
+          <div className="h-px w-16 bg-[#78716c] mx-auto" />
         </div>
 
         {step === "success" ? (
@@ -187,11 +187,11 @@ export default function BookingSection({ services }: BookingSectionProps) {
                 </p>
                 <div className="flex gap-3 shrink-0">
                   <Link href="/connexion?callbackUrl=%2F%23reservation"
-                    className="text-xs uppercase tracking-widest text-[#b8975a] flex items-center gap-1 hover:text-[#2a2018] transition-colors">
+                    className="text-xs uppercase tracking-widest text-[#78716c] flex items-center gap-1 hover:text-[#2a2018] transition-colors">
                     <LogIn size={14} /> Se connecter
                   </Link>
                   <Link href="/inscription"
-                    className="text-xs uppercase tracking-widest bg-[#b8975a] text-white px-4 py-2 hover:bg-[#2a2018] transition-colors flex items-center gap-1">
+                    className="text-xs uppercase tracking-widest bg-[#78716c] text-white px-4 py-2 hover:bg-[#2a2018] transition-colors flex items-center gap-1">
                     <User size={14} /> Créer un compte
                   </Link>
                 </div>
@@ -200,7 +200,7 @@ export default function BookingSection({ services }: BookingSectionProps) {
 
             {/* Logged in badge */}
             {isLoggedIn && (
-              <div className="mb-8 flex items-center gap-2 text-xs text-[#b8975a]">
+              <div className="mb-8 flex items-center gap-2 text-xs text-[#78716c]">
                 <User size={14} />
                 <span>Connecté(e) en tant que <strong>{session?.user?.name}</strong></span>
                 <Link href="/mon-compte" className="ml-auto underline hover:text-[#2a2018] transition-colors">Mon compte →</Link>
@@ -216,11 +216,11 @@ export default function BookingSection({ services }: BookingSectionProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {services.map((s) => (
                     <button key={s.id} onClick={() => handleServiceSelect(s)}
-                      className="text-left p-6 border border-[#e8d5c4] hover:border-[#b8975a] hover:bg-[#faf6f1] transition-all group">
+                      className="text-left p-6 border border-[#e8d5c4] hover:border-[#78716c] hover:bg-[#faf6f1] transition-all group">
                       <p className="font-display text-xl text-[#2a2018] mb-1">{s.name}</p>
                       <div className="flex justify-between items-center">
                         <span className="text-xs text-[#2a2018]/50">{formatDuration(s.duration)}</span>
-                        <span className="text-[#b8975a] font-display text-lg">{formatPrice(s.price)}</span>
+                        <span className="text-[#78716c] font-display text-lg">{formatPrice(s.price)}</span>
                       </div>
                     </button>
                   ))}
@@ -231,14 +231,14 @@ export default function BookingSection({ services }: BookingSectionProps) {
             {/* Step 2: Date */}
             {step === "date" && (
               <div>
-                <button onClick={() => setStep("service")} className="text-xs text-[#b8975a] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
+                <button onClick={() => setStep("service")} className="text-xs text-[#78716c] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
                 <h3 className="font-display text-2xl text-[#2a2018] mb-2 text-center">Choisissez une date</h3>
                 <p className="text-center text-sm text-[#2a2018]/50 mb-6">{selectedService?.name}</p>
 
                 {/* Légende */}
                 <div className="flex items-center justify-center gap-6 mb-6 text-xs text-[#2a2018]/50 font-body">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-[#b8975a] inline-block" /> Disponible
+                    <span className="w-3 h-3 rounded-full bg-[#78716c] inline-block" /> Disponible
                   </span>
                   <span className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-red-200 inline-block" /> Complet
@@ -246,7 +246,7 @@ export default function BookingSection({ services }: BookingSectionProps) {
                 </div>
 
                 {loadingAvailability && (
-                  <p className="text-center text-xs text-[#b8975a] mb-4">Vérification des disponibilités…</p>
+                  <p className="text-center text-xs text-[#78716c] mb-4">Vérification des disponibilités…</p>
                 )}
 
                 <div className="flex justify-center">
@@ -283,24 +283,24 @@ export default function BookingSection({ services }: BookingSectionProps) {
             {/* Step 3: Time */}
             {step === "time" && (
               <div>
-                <button onClick={() => setStep("date")} className="text-xs text-[#b8975a] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
+                <button onClick={() => setStep("date")} className="text-xs text-[#78716c] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
                 <h3 className="font-display text-2xl text-[#2a2018] mb-2 text-center">Choisissez un créneau</h3>
                 <p className="text-center text-sm text-[#2a2018]/50 mb-8">
                   {selectedDate && format(selectedDate, "EEEE d MMMM yyyy", { locale: fr })}
                 </p>
                 {loadingSlots ? (
-                  <div className="text-center py-8 text-[#b8975a]">Chargement…</div>
+                  <div className="text-center py-8 text-[#78716c]">Chargement…</div>
                 ) : slots.filter((s) => s.available).length === 0 ? (
                   <div className="text-center py-8">
                     <p className="text-[#2a2018]/60 mb-4">Aucun créneau disponible ce jour.</p>
-                    <button onClick={() => setStep("date")} className="text-xs text-[#b8975a] uppercase tracking-widest underline">Choisir une autre date</button>
+                    <button onClick={() => setStep("date")} className="text-xs text-[#78716c] uppercase tracking-widest underline">Choisir une autre date</button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                     {slots.map((slot) => (
                       <button key={slot.time} disabled={!slot.available} onClick={() => handleTimeSelect(slot.time)}
                         className={`py-3 text-sm border transition-all ${slot.available
-                          ? "border-[#e8d5c4] text-[#2a2018] hover:border-[#b8975a] hover:bg-[#faf6f1]"
+                          ? "border-[#e8d5c4] text-[#2a2018] hover:border-[#78716c] hover:bg-[#faf6f1]"
                           : "border-[#f0e6d8] text-[#2a2018]/20 cursor-not-allowed line-through"}`}>
                         {slot.time}
                       </button>
@@ -308,7 +308,7 @@ export default function BookingSection({ services }: BookingSectionProps) {
                   </div>
                 )}
                 {!isLoggedIn && slots.some((s) => s.available) && (
-                  <p className="text-center text-xs text-[#b8975a] mt-6">
+                  <p className="text-center text-xs text-[#78716c] mt-6">
                     Vous serez invité(e) à vous connecter pour finaliser la réservation.
                   </p>
                 )}
@@ -318,7 +318,7 @@ export default function BookingSection({ services }: BookingSectionProps) {
             {/* Step 4: Confirm */}
             {step === "confirm" && (
               <div>
-                <button onClick={() => setStep("time")} className="text-xs text-[#b8975a] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
+                <button onClick={() => setStep("time")} className="text-xs text-[#78716c] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
                 <h3 className="font-display text-2xl text-[#2a2018] mb-2 text-center">Confirmation</h3>
                 <p className="text-center text-sm text-[#2a2018]/50 mb-8">
                   {selectedService?.name} · {selectedDate && format(selectedDate, "d MMM", { locale: fr })} à {selectedTime}
@@ -352,7 +352,7 @@ function SummaryRow({ label, value, gold = false }: { label: string; value: stri
   return (
     <div className="flex justify-between text-sm">
       <span className="text-[#2a2018]/50">{label}</span>
-      <span className={`font-medium ${gold ? "text-[#b8975a] font-display text-lg" : "text-[#2a2018]"}`}>{value}</span>
+      <span className={`font-medium ${gold ? "text-[#78716c] font-display text-lg" : "text-[#2a2018]"}`}>{value}</span>
     </div>
   );
 }
@@ -370,15 +370,15 @@ function StepIndicator({ current }: { current: Step }) {
       {steps.map((step, i) => (
         <div key={step.key} className="flex items-center">
           <div className="flex flex-col items-center">
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-colors ${i <= activeIndex ? "bg-[#b8975a] text-white" : "bg-[#e8d5c4] text-[#2a2018]/40"}`}>
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-colors ${i <= activeIndex ? "bg-[#78716c] text-white" : "bg-[#e8d5c4] text-[#2a2018]/40"}`}>
               {i + 1}
             </div>
-            <span className={`text-xs mt-1 tracking-wider hidden sm:block ${i <= activeIndex ? "text-[#b8975a]" : "text-[#2a2018]/30"}`}>
+            <span className={`text-xs mt-1 tracking-wider hidden sm:block ${i <= activeIndex ? "text-[#78716c]" : "text-[#2a2018]/30"}`}>
               {step.label}
             </span>
           </div>
           {i < steps.length - 1 && (
-            <div className={`w-12 sm:w-16 h-px mx-1 mb-4 ${i < activeIndex ? "bg-[#b8975a]" : "bg-[#e8d5c4]"}`} />
+            <div className={`w-12 sm:w-16 h-px mx-1 mb-4 ${i < activeIndex ? "bg-[#78716c]" : "bg-[#e8d5c4]"}`} />
           )}
         </div>
       ))}
@@ -392,7 +392,7 @@ function SuccessView({ service, date, time, clientName, onReset }: {
   return (
     <div className="bg-white p-12 text-center">
       <div className="flex justify-center mb-6">
-        <CheckCircle size={48} className="text-[#b8975a]" strokeWidth={1} />
+        <CheckCircle size={48} className="text-[#78716c]" strokeWidth={1} />
       </div>
       <h3 className="font-display text-3xl text-[#2a2018] mb-3">Rendez-vous confirmé !</h3>
       <p className="text-[#2a2018]/60 font-body mb-8">
@@ -406,11 +406,11 @@ function SuccessView({ service, date, time, clientName, onReset }: {
       </div>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link href="/mon-compte"
-          className="inline-flex items-center justify-center px-8 py-3 border border-[#b8975a] text-[#b8975a] text-xs uppercase tracking-widest hover:bg-[#b8975a] hover:text-white transition-colors">
+          className="inline-flex items-center justify-center px-8 py-3 border border-[#78716c] text-[#78716c] text-xs uppercase tracking-widest hover:bg-[#78716c] hover:text-white transition-colors">
           Voir mon historique
         </Link>
         <button onClick={onReset}
-          className="text-xs tracking-widest uppercase text-[#2a2018]/40 hover:text-[#b8975a] transition-colors">
+          className="text-xs tracking-widest uppercase text-[#2a2018]/40 hover:text-[#78716c] transition-colors">
           Faire une autre réservation
         </button>
       </div>

@@ -50,8 +50,8 @@ export default async function AppointmentsPage({
               href={`/admin/appointments?status=${s}`}
               className={`px-4 py-2 text-xs uppercase tracking-widest border transition-colors ${
                 (status || "all") === s
-                  ? "bg-[#b8975a] text-white border-[#b8975a]"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-[#b8975a]"
+                  ? "bg-[#78716c] text-white border-[#78716c]"
+                  : "bg-white text-gray-500 border-gray-200 hover:border-[#78716c]"
               }`}
             >
               {s === "all" ? "Tous" : statusLabel[s]}
@@ -87,7 +87,7 @@ export default async function AppointmentsPage({
                       <p className="text-gray-400 text-xs">{format(new Date(appt.date), "HH:mm")} – {format(new Date(appt.endTime), "HH:mm")}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] hover:text-[#b8975a] transition-colors">
+                      <a href={`/admin/clients/${appt.client.id}`} className="font-medium text-[#2a2018] hover:text-[#78716c] transition-colors">
                         {appt.client.firstName} {appt.client.lastName}
                       </a>
                       <p className="text-gray-400 text-xs">{appt.client.email}</p>

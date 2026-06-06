@@ -31,7 +31,7 @@ function SignOutButton() {
       onClick={async () => {
         await signOut({ callbackUrl: "/admin/login", redirect: true });
       }}
-      className="flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:text-white w-full transition-colors"
+      className="flex items-center gap-3 px-4 py-3 text-sm text-[#5a5a5a] hover:text-[#2a2018] hover:bg-[#e2e2e4] w-full transition-colors rounded-sm"
     >
       <LogOut size={18} />
       Se déconnecter
@@ -43,15 +43,17 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#2a2018] text-white flex flex-col z-40 hidden md:flex">
+    <aside className="fixed left-0 top-0 bottom-0 w-64 flex flex-col z-40 hidden md:flex"
+      style={{ backgroundColor: "#f0f0f1", borderRight: "1px solid #e2e2e4" }}>
+
       {/* Logo */}
-      <div className="p-6 border-b border-white/10">
-        <p className="font-display text-2xl text-white">Nailsbysd</p>
-        <p className="text-xs tracking-widest uppercase text-[#b8975a]">Administration</p>
+      <div className="p-6" style={{ borderBottom: "1px solid #e2e2e4" }}>
+        <p className="font-display text-2xl text-[#2a2018]">Nailsbysd</p>
+        <p className="text-xs tracking-widest uppercase text-[#78716c]">Administration</p>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-6 px-4 space-y-1">
+      <nav className="flex-1 py-4 px-3 space-y-0.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
@@ -60,13 +62,13 @@ export default function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 text-sm transition-colors",
+                "flex items-center gap-3 px-4 py-2.5 text-sm rounded-sm transition-colors",
                 active
-                  ? "bg-[#b8975a] text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/5"
+                  ? "bg-[#e2e2e4] text-[#2a2018] font-medium"
+                  : "text-[#5a5a5a] hover:bg-[#e8e8e9] hover:text-[#2a2018]"
               )}
             >
-              <Icon size={18} />
+              <Icon size={17} className={active ? "text-[#78716c]" : "text-[#9ca3af]"} />
               {item.label}
             </Link>
           );
@@ -74,11 +76,11 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-white/10">
+      <div className="p-3 space-y-0.5" style={{ borderTop: "1px solid #e2e2e4" }}>
         <SignOutButton />
         <Link
           href="/"
-          className="flex items-center gap-3 px-4 py-3 text-sm text-white/40 hover:text-white/60 transition-colors"
+          className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#9ca3af] hover:text-[#5a5a5a] hover:bg-[#e8e8e9] rounded-sm transition-colors"
         >
           ← Voir le site
         </Link>

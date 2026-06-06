@@ -43,7 +43,7 @@ export default async function ClientDetailPage({
   return (
     <div className="p-8">
       {/* Back */}
-      <Link href="/admin/clients" className="inline-flex items-center gap-2 text-xs text-[#b8975a] uppercase tracking-widest mb-8 hover:text-[#2a2018] transition-colors">
+      <Link href="/admin/clients" className="inline-flex items-center gap-2 text-xs text-[#78716c] uppercase tracking-widest mb-8 hover:text-[#2a2018] transition-colors">
         <ArrowLeft size={14} /> Tous les clients
       </Link>
 
@@ -53,7 +53,7 @@ export default async function ClientDetailPage({
           {/* Identity */}
           <div className="bg-white border border-gray-100 p-6">
             <div className="w-14 h-14 bg-[#faf6f1] flex items-center justify-center mb-4">
-              <span className="font-display text-2xl text-[#b8975a]">
+              <span className="font-display text-2xl text-[#78716c]">
                 {client.firstName[0]}{client.lastName[0]}
               </span>
             </div>
@@ -65,11 +65,11 @@ export default async function ClientDetailPage({
             </p>
 
             <div className="mt-5 space-y-3">
-              <a href={`tel:${client.phone}`} className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#b8975a] transition-colors">
-                <Phone size={15} className="text-[#b8975a]" /> {client.phone}
+              <a href={`tel:${client.phone}`} className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#78716c] transition-colors">
+                <Phone size={15} className="text-[#78716c]" /> {client.phone}
               </a>
-              <a href={`mailto:${client.email}`} className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#b8975a] transition-colors">
-                <Mail size={15} className="text-[#b8975a]" /> {client.email}
+              <a href={`mailto:${client.email}`} className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#78716c] transition-colors">
+                <Mail size={15} className="text-[#78716c]" /> {client.email}
               </a>
             </div>
 
@@ -131,7 +131,7 @@ export default async function ClientDetailPage({
                   <div key={appt.id} className="px-6 py-5 flex items-center justify-between gap-4">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 bg-[#faf6f1] flex items-center justify-center shrink-0">
-                        <Calendar size={16} className="text-[#b8975a]" />
+                        <Calendar size={16} className="text-[#78716c]" />
                       </div>
                       <div>
                         <p className="font-medium text-[#2a2018]">{appt.service.name}</p>
@@ -148,7 +148,7 @@ export default async function ClientDetailPage({
                       </div>
                     </div>
                     <div className="text-right shrink-0 space-y-1">
-                      <p className="font-display text-xl text-[#b8975a]">{formatPrice(appt.price)}</p>
+                      <p className="font-display text-xl text-[#78716c]">{formatPrice(appt.price)}</p>
                       <span className={`text-xs px-2 py-0.5 ${STATUS_COLOR[appt.status] || "bg-gray-100 text-gray-500"}`}>
                         {STATUS_LABEL[appt.status] || appt.status}
                       </span>
@@ -168,7 +168,7 @@ function StatRow({ label, value, gold = false }: { label: string; value: string;
   return (
     <div className="flex justify-between items-center text-sm">
       <span className="text-gray-400">{label}</span>
-      <span className={`font-medium ${gold ? "font-display text-lg text-[#b8975a]" : "text-[#2a2018]"}`}>
+      <span className={`font-medium ${gold ? "font-display text-lg text-[#78716c]" : "text-[#2a2018]"}`}>
         {value}
       </span>
     </div>

@@ -54,11 +54,11 @@ export default async function ClientsPage() {
                       <td className="px-6 py-4 text-gray-500">{client.email}</td>
                       <td className="px-6 py-4 text-gray-500">{client.phone}</td>
                       <td className="px-6 py-4 text-center">
-                        <span className="inline-flex items-center justify-center w-7 h-7 bg-[#faf6f1] text-[#b8975a] font-medium text-sm">
+                        <span className="inline-flex items-center justify-center w-7 h-7 bg-[#faf6f1] text-[#78716c] font-medium text-sm">
                           {client._count.appointments}
                         </span>
                       </td>
-                      <td className="px-6 py-4 font-display text-lg text-[#b8975a]">
+                      <td className="px-6 py-4 font-display text-lg text-[#78716c]">
                         {formatPrice(totalSpent)}
                       </td>
                       <td className="px-6 py-4 text-gray-400 text-xs">
@@ -66,7 +66,7 @@ export default async function ClientsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <Link href={`/admin/clients/${client.id}`}
-                          className="text-xs text-[#b8975a] uppercase tracking-widest hover:text-[#2a2018] transition-colors">
+                          className="text-xs text-[#78716c] uppercase tracking-widest hover:text-[#2a2018] transition-colors">
                           Voir →
                         </Link>
                       </td>

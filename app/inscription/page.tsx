@@ -69,7 +69,7 @@ export default function InscriptionPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <Link href="/" className="font-display text-4xl text-[#2a2018]">Nailsbysd</Link>
-          <p className="text-xs tracking-[0.3em] uppercase text-[#b8975a] mt-1">Créer mon compte</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#78716c] mt-1">Créer mon compte</p>
         </div>
 
         <div className="bg-white p-8">
@@ -105,12 +105,12 @@ export default function InscriptionPage() {
 
         <p className="text-center mt-6 text-sm text-[#2a2018]/50">
           Déjà un compte ?{" "}
-          <Link href="/connexion" className="text-[#b8975a] hover:underline">
+          <Link href="/connexion" className="text-[#78716c] hover:underline">
             Se connecter
           </Link>
         </p>
         <p className="text-center mt-3">
-          <Link href="/" className="text-xs text-[#2a2018]/30 hover:text-[#b8975a] uppercase tracking-widest">
+          <Link href="/" className="text-xs text-[#2a2018]/30 hover:text-[#78716c] uppercase tracking-widest">
             ← Retour au site
           </Link>
         </p>

@@ -53,7 +53,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <h1 className="font-display text-4xl text-[#2a2018] mb-1">Nailsbysd</h1>
-          <p className="text-xs tracking-[0.3em] uppercase text-[#b8975a]">Espace Administration</p>
+          <p className="text-xs tracking-[0.3em] uppercase text-[#78716c]">Espace Administration</p>
         </div>
 
         <div className="bg-white p-8">
@@ -72,7 +72,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center mt-6">
-          <a href="/" className="text-xs text-[#2a2018]/40 hover:text-[#b8975a] uppercase tracking-widest">
+          <a href="/" className="text-xs text-[#2a2018]/40 hover:text-[#78716c] uppercase tracking-widest">
             ← Retour au site
           </a>
         </p>
