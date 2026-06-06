@@ -10,12 +10,32 @@ export default withAuth(
     const pathname = req.nextUrl.pathname;
     const token = req.nextauth.token as { role?: string } | null;
 
-    const isAdminSubdomain =
-      host === ADMIN_DOMAIN || host === `www.${ADMIN_DOMAIN}`;
+    const isAdminSubdomain = host === ADMIN_DOMAIN || host === `www.${ADMIN_DOMAIN}`;
+    const isCustomDomain = host === PUBLIC_DOMAIN || host === `www.${PUBLIC_DOMAIN}`;
     const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1");
+    // Vercel preview/prod URLs (*.vercel.app) — traiter comme localhost
+    const isVercel = host.includes("vercel.app");
 
-    // ── LOCALHOST : comportement actuel conservé ─────────────────────────────
-    if (isLocalhost) {
+    // ── admin.nailsbysd.com ──────────────────────────────────────────────
+    if (isAdminSubdomain) {
+      if (!token || token.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/admin/login", req.url));
+      }
+      if (pathname === "/") {
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
+      return NextResponse.next();
+    }
+
+    // ── nailsbysd.com (domaine public custom) ───────────────────────────
+    // Rediriger /admin vers le sous-domaine admin uniquement sur le vrai domaine
+    if (isCustomDomain && pathname.startsWith("/admin")) {
+      const target = `https://${ADMIN_DOMAIN}${pathname}${req.nextUrl.search}`;
+      return NextResponse.redirect(target);
+    }
+
+    // ── localhost & vercel.app : protection simple sans redirection ──────
+    if (isLocalhost || isVercel) {
       if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
         if (!token || token.role !== "ADMIN") {
           return NextResponse.redirect(new URL("/admin/login", req.url));
@@ -24,48 +44,25 @@ export default withAuth(
       return NextResponse.next();
     }
 
-    // ── admin.nailsbysd.com ──────────────────────────────────────────────────
-    if (isAdminSubdomain) {
-      // Non authentifié ou non admin → page de login
-      if (!token || token.role !== "ADMIN") {
-        return NextResponse.redirect(new URL("/admin/login", req.url));
-      }
-      // Racine du sous-domaine → dashboard
-      if (pathname === "/") {
-        return NextResponse.redirect(new URL("/admin", req.url));
-      }
-      return NextResponse.next();
-    }
-
-    // ── nailsbysd.com ────────────────────────────────────────────────────────
-    // Accès direct à /admin sur le domaine public → rediriger vers sous-domaine
-    if (pathname.startsWith("/admin")) {
-      const target = `https://${ADMIN_DOMAIN}${pathname}${req.nextUrl.search}`;
-      return NextResponse.redirect(target);
-    }
-
     return NextResponse.next();
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
         const host = req.headers.get("host") || "";
-        const isAdminSubdomain = host === ADMIN_DOMAIN || host === `www.${ADMIN_DOMAIN}`;
-        const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1");
         const pathname = req.nextUrl.pathname;
+        const isAdminSubdomain = host === ADMIN_DOMAIN;
+        const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1");
+        const isVercel = host.includes("vercel.app");
 
-        // Routes publiques : toujours autorisées
-        if (!isAdminSubdomain && !pathname.startsWith("/admin")) return true;
+        // Login page toujours accessible
+        if (pathname.startsWith("/admin/login")) return true;
 
-        // localhost /admin : besoin d'un token
-        if (isLocalhost && pathname.startsWith("/admin")) {
-          if (pathname.startsWith("/admin/login")) return true;
-          return !!token;
-        }
+        // Routes publiques
+        if (!pathname.startsWith("/admin")) return true;
 
-        // admin subdomain : besoin d'un token
-        if (isAdminSubdomain) {
-          if (pathname.startsWith("/admin/login")) return true;
+        // Admin routes : token requis
+        if (isAdminSubdomain || isLocalhost || isVercel) {
           return !!token;
         }
 
@@ -80,7 +77,6 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    // Toutes les routes sauf fichiers statiques Next.js
     "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)).*)",
   ],
 };
