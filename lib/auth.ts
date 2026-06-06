@@ -67,8 +67,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // En production : cookie valable sur tous les sous-domaines *.nailsbysd.com
-  ...(isProd && {
+  // Cookie cross-subdomain uniquement quand le vrai domaine est configuré
+  ...(process.env.NEXTAUTH_URL?.includes("nailsbysd.com") && !process.env.NEXTAUTH_URL?.includes("vercel.app") ? {
     cookies: {
       sessionToken: {
         name: "next-auth.session-token",
@@ -81,6 +81,6 @@ export const authOptions: NextAuthOptions = {
         },
       },
     },
-  }),
+  } : {}),
   secret: process.env.NEXTAUTH_SECRET,
 };
