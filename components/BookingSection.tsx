@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { DayPicker } from "react-day-picker";
 import { fr } from "date-fns/locale";
-import { format, addDays, startOfDay } from "date-fns";
+import { format, addDays, startOfDay, parseISO } from "date-fns";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { formatDuration, formatPrice } from "@/lib/utils";
@@ -38,9 +38,33 @@ export default function BookingSection({ services }: BookingSectionProps) {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [unavailableDates, setUnavailableDates] = useState<Date[]>([]);
+  const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
 
   const today = startOfDay(new Date());
   const maxDate = addDays(today, 90);
+
+  const fetchUnavailableDates = useCallback(async (month: Date, serviceId: string) => {
+    setLoadingAvailability(true);
+    try {
+      const monthStr = format(month, "yyyy-MM");
+      const res = await fetch(`/api/availability?month=${monthStr}&serviceId=${serviceId}`);
+      const data = await res.json();
+      setUnavailableDates((data.unavailableDates || []).map((d: string) => parseISO(d)));
+    } catch {
+      setUnavailableDates([]);
+    } finally {
+      setLoadingAvailability(false);
+    }
+  }, []);
+
+  // Fetch unavailable dates when service is selected or month changes
+  useEffect(() => {
+    if (selectedService && step === "date") {
+      fetchUnavailableDates(currentMonth, selectedService.id);
+    }
+  }, [selectedService, currentMonth, step, fetchUnavailableDates]);
 
   async function fetchSlots(date: Date, serviceId: string) {
     setLoadingSlots(true);
@@ -61,6 +85,8 @@ export default function BookingSection({ services }: BookingSectionProps) {
     setSelectedDate(undefined);
     setSelectedTime("");
     setSlots([]);
+    setUnavailableDates([]);
+    setCurrentMonth(new Date());
     setStep("date");
   }
 
@@ -207,11 +233,49 @@ export default function BookingSection({ services }: BookingSectionProps) {
               <div>
                 <button onClick={() => setStep("service")} className="text-xs text-[#b8975a] mb-6 flex items-center gap-2 uppercase tracking-widest">← Retour</button>
                 <h3 className="font-display text-2xl text-[#2a2018] mb-2 text-center">Choisissez une date</h3>
-                <p className="text-center text-sm text-[#2a2018]/50 mb-8">{selectedService?.name}</p>
+                <p className="text-center text-sm text-[#2a2018]/50 mb-6">{selectedService?.name}</p>
+
+                {/* Légende */}
+                <div className="flex items-center justify-center gap-6 mb-6 text-xs text-[#2a2018]/50 font-body">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-[#b8975a] inline-block" /> Disponible
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-3 h-3 rounded-full bg-red-200 inline-block" /> Complet
+                  </span>
+                </div>
+
+                {loadingAvailability && (
+                  <p className="text-center text-xs text-[#b8975a] mb-4">Vérification des disponibilités…</p>
+                )}
+
                 <div className="flex justify-center">
-                  <DayPicker mode="single" selected={selectedDate} onSelect={handleDateSelect} locale={fr}
-                    disabled={[{ before: addDays(today, 1) }, { after: maxDate }, { dayOfWeek: [0] }]}
-                    startMonth={today} endMonth={maxDate} />
+                  <DayPicker
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={handleDateSelect}
+                    onMonthChange={(month) => setCurrentMonth(month)}
+                    locale={fr}
+                    disabled={[
+                      { before: addDays(today, 1) },
+                      { after: maxDate },
+                      { dayOfWeek: [0] },
+                      ...unavailableDates,
+                    ]}
+                    modifiers={{
+                      unavailable: unavailableDates,
+                    }}
+                    modifiersStyles={{
+                      unavailable: {
+                        textDecoration: "line-through",
+                        color: "#e57373",
+                        opacity: 0.6,
+                        backgroundColor: "#fef2f2",
+                      },
+                    }}
+                    startMonth={today}
+                    endMonth={maxDate}
+                  />
                 </div>
               </div>
             )}
