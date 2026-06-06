@@ -18,9 +18,9 @@ export default function LoginPage() {
   useEffect(() => {
     const role = (session?.user as { role?: string })?.role;
     if (role === "ADMIN") {
-      router.push("/admin");
+      window.location.href = "/admin";
     }
-  }, [session, router]);
+  }, [session]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,12 +39,12 @@ export default function LoginPage() {
       redirect: false,
     });
 
-    setLoading(false);
-
     if (res?.error) {
+      setLoading(false);
       setError("Email ou mot de passe incorrect");
     } else {
-      router.push("/admin");
+      // Rechargement complet pour que les Server Components lisent le cookie
+      window.location.href = "/admin";
     }
   }
 
