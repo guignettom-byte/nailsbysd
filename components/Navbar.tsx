@@ -28,6 +28,7 @@ export default function Navbar() {
 
   const links = [
     { href: "#prestations", label: "Prestations" },
+    { href: "/galerie", label: "Galerie" },
     { href: "#reservation", label: "Réserver" },
     { href: "#contact", label: "Contact" },
   ];

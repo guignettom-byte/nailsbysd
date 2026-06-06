@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   BanIcon,
   TrendingUp,
+  Images,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ const navItems = [
   { href: "/admin/appointments", icon: Calendar, label: "Rendez-vous" },
   { href: "/admin/clients", icon: Users, label: "Clients" },
   { href: "/admin/comptabilite", icon: TrendingUp, label: "Comptabilité" },
+  { href: "/admin/galerie", icon: Images, label: "Galerie" },
   { href: "/admin/services", icon: Scissors, label: "Prestations" },
   { href: "/admin/blocked-days", icon: BanIcon, label: "Jours bloqués" },
   { href: "/admin/working-hours", icon: Settings, label: "Horaires" },

@@ -75,3 +75,12 @@ model WorkingHours {
   endTime   String
   active    Boolean @default(true)
 }
+
+model Photo {
+  id          String   @id @default(cuid())
+  url         String
+  title       String?
+  category    String   @default("Autre")
+  serviceId   String?
+  createdAt   DateTime @default(now())
+}

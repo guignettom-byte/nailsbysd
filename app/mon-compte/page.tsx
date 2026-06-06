@@ -68,6 +68,22 @@ export default function MonComptePage() {
     );
   }
 
+  async function handleCancel(apptId: string) {
+    if (!confirm("Annuler ce rendez-vous ? Cette action est irréversible.")) return;
+    const res = await fetch(`/api/appointments/${apptId}/cancel`, { method: "POST" });
+    const data = await res.json();
+    if (res.ok) {
+      setClient((prev) => prev ? {
+        ...prev,
+        appointments: prev.appointments.map((a) =>
+          a.id === apptId ? { ...a, status: "CANCELLED" } : a
+        ),
+      } : prev);
+    } else {
+      alert(data.error || "Impossible d'annuler ce rendez-vous.");
+    }
+  }
+
   if (!client) return null;
 
   const upcoming = client.appointments.filter(
@@ -116,7 +132,7 @@ export default function MonComptePage() {
           <div className="mb-8">
             <h2 className="font-display text-2xl text-[#2a2018] mb-4">Prochain rendez-vous</h2>
             {upcoming.map((appt) => (
-              <AppointmentCard key={appt.id} appt={appt} highlight />
+              <AppointmentCard key={appt.id} appt={appt} highlight onCancel={handleCancel} />
             ))}
           </div>
         )}
@@ -180,28 +196,54 @@ export default function MonComptePage() {
   );
 }
 
-function AppointmentCard({ appt, highlight = false }: { appt: Appointment; highlight?: boolean }) {
+function AppointmentCard({ appt, highlight = false, onCancel }: {
+  appt: Appointment;
+  highlight?: boolean;
+  onCancel?: (id: string) => void;
+}) {
+  const isUpcoming = new Date(appt.date) >= new Date() && appt.status !== "CANCELLED";
+  const hoursUntil = (new Date(appt.date).getTime() - Date.now()) / 3600000;
+  const canCancel = isUpcoming && hoursUntil >= 24;
+
   return (
-    <div className={`bg-white p-5 flex items-center justify-between gap-4 ${highlight ? "border-l-4 border-[#78716c]" : ""}`}>
-      <div className="flex-1">
-        <p className="font-display text-lg text-[#2a2018]">{appt.service.name}</p>
-        <div className="flex items-center gap-4 mt-1">
-          <span className="flex items-center gap-1 text-xs text-[#2a2018]/50">
-            <Calendar size={12} />
-            {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: fr })}
-          </span>
-          <span className="flex items-center gap-1 text-xs text-[#2a2018]/50">
-            <Clock size={12} />
-            {format(new Date(appt.date), "HH:mm")}
+    <div className={`bg-white p-5 ${highlight ? "border-l-4 border-[#78716c]" : ""}`}>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1">
+          <p className="font-display text-lg text-[#2a2018]">{appt.service.name}</p>
+          <div className="flex items-center gap-4 mt-1 flex-wrap">
+            <span className="flex items-center gap-1 text-xs text-[#2a2018]/50">
+              <Calendar size={12} />
+              {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: fr })}
+            </span>
+            <span className="flex items-center gap-1 text-xs text-[#2a2018]/50">
+              <Clock size={12} />
+              {format(new Date(appt.date), "HH:mm")}
+            </span>
+          </div>
+        </div>
+        <div className="text-right shrink-0 space-y-1">
+          <p className="font-display text-lg text-[#78716c]">{formatPrice(appt.price)}</p>
+          <span className={`text-xs px-2 py-0.5 ${STATUS_COLOR[appt.status] || "bg-gray-100 text-gray-500"}`}>
+            {STATUS_LABEL[appt.status] || appt.status}
           </span>
         </div>
       </div>
-      <div className="text-right shrink-0 space-y-1">
-        <p className="font-display text-lg text-[#78716c]">{formatPrice(appt.price)}</p>
-        <span className={`text-xs px-2 py-0.5 ${STATUS_COLOR[appt.status] || "bg-gray-100 text-gray-500"}`}>
-          {STATUS_LABEL[appt.status] || appt.status}
-        </span>
-      </div>
+      {onCancel && isUpcoming && (
+        <div className="mt-3 pt-3 border-t border-gray-100">
+          {canCancel ? (
+            <button
+              onClick={() => onCancel(appt.id)}
+              className="text-xs text-red-400 hover:text-red-600 transition-colors uppercase tracking-widest"
+            >
+              Annuler ce rendez-vous
+            </button>
+          ) : (
+            <p className="text-xs text-gray-300">
+              Annulation impossible — moins de 24h avant le RDV
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
