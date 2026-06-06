@@ -1,6 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/admin-guard";
 import { prisma } from "@/lib/prisma";
 import { format, startOfDay, endOfDay, addDays } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -8,8 +6,7 @@ import Link from "next/link";
 import { Calendar, Clock, CheckCircle, XCircle } from "lucide-react";
 
 export default async function AdminDashboard() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  await requireAdmin();
 
   const now = new Date();
   const todayStart = startOfDay(now);

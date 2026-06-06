@@ -1,12 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/admin-guard";
 import { prisma } from "@/lib/prisma";
 import ServicesManager from "@/components/admin/ServicesManager";
 
 export default async function AdminServicesPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  await requireAdmin();
 
   const services = await prisma.service.findMany({ orderBy: { createdAt: "asc" } });
 

@@ -1,10 +1,28 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { decode } from "next-auth/jwt";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
+async function getAdminToken() {
+  const cookieStore = await cookies();
+  const token =
+    cookieStore.get("next-auth.session-token")?.value ||
+    cookieStore.get("__Secure-next-auth.session-token")?.value;
+
+  if (!token) return null;
+
+  try {
+    return await decode({
+      token,
+      secret: process.env.NEXTAUTH_SECRET!,
+    });
+  } catch {
+    return null;
+  }
+}
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
-  const isAdmin = (session?.user as { role?: string })?.role === "ADMIN";
+  const token = await getAdminToken();
+  const isAdmin = (token as { role?: string } | null)?.role === "ADMIN";
 
   return (
     <div className="min-h-screen bg-gray-50 flex">

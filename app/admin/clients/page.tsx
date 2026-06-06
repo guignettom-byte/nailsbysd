@@ -1,6 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/admin-guard";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -8,8 +6,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 
 export default async function ClientsPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  await requireAdmin();
 
   const clients = await prisma.client.findMany({
     orderBy: { createdAt: "desc" },

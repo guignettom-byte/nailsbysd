@@ -1,22 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Si déjà connecté en tant qu'admin, rediriger directement
+  useEffect(() => {
+    const role = (session?.user as { role?: string })?.role;
+    if (role === "ADMIN") {
+      router.push("/admin");
+    }
+  }, [session, router]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    // Si une session CLIENT est active, la déconnecter d'abord
+    const role = (session?.user as { role?: string })?.role;
+    if (session && role !== "ADMIN") {
+      await signOut({ redirect: false });
+    }
 
     const res = await signIn("admin-credentials", {
       email,

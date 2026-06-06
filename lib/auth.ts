@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const authOptions: NextAuthOptions = {
   providers: [
     // Admin login
@@ -65,5 +67,20 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  // En production : cookie valable sur tous les sous-domaines *.nailsbysd.com
+  ...(isProd && {
+    cookies: {
+      sessionToken: {
+        name: "next-auth.session-token",
+        options: {
+          httpOnly: true,
+          sameSite: "lax" as const,
+          path: "/",
+          secure: true,
+          domain: ".nailsbysd.com",
+        },
+      },
+    },
+  }),
   secret: process.env.NEXTAUTH_SECRET,
 };

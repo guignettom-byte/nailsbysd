@@ -1,12 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/admin-guard";
 import { prisma } from "@/lib/prisma";
 import WorkingHoursManager from "@/components/admin/WorkingHoursManager";
 
 export default async function WorkingHoursPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  await requireAdmin();
 
   const workingHours = await prisma.workingHours.findMany({
     orderBy: { dayOfWeek: "asc" },

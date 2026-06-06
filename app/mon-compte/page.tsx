@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { formatPrice, formatDuration } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 import { LogOut, Calendar, Clock, ChevronRight } from "lucide-react";
 
 interface Appointment {
@@ -76,8 +76,6 @@ export default function MonComptePage() {
   const past = client.appointments.filter(
     (a) => new Date(a.date) < new Date() && a.status !== "CANCELLED"
   );
-  const totalSpent = past.reduce((sum, a) => sum + a.price, 0);
-
   return (
     <div className="min-h-screen bg-[#faf6f1]">
       {/* Header */}
@@ -102,7 +100,7 @@ export default function MonComptePage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-2 gap-4 mb-10">
           <div className="bg-white p-5 text-center">
             <p className="font-display text-3xl text-[#b8975a]">{past.length}</p>
             <p className="text-xs text-[#2a2018]/50 uppercase tracking-widest mt-1">Visites</p>
@@ -110,10 +108,6 @@ export default function MonComptePage() {
           <div className="bg-white p-5 text-center">
             <p className="font-display text-3xl text-[#b8975a]">{upcoming.length}</p>
             <p className="text-xs text-[#2a2018]/50 uppercase tracking-widest mt-1">À venir</p>
-          </div>
-          <div className="bg-white p-5 text-center">
-            <p className="font-display text-3xl text-[#b8975a]">{formatPrice(totalSpent)}</p>
-            <p className="text-xs text-[#2a2018]/50 uppercase tracking-widest mt-1">Total dépensé</p>
           </div>
         </div>
 
