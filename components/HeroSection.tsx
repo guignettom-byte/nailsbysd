@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background gradient */}
+      {/* Base gradient (fallback si l'image n'est pas encore déposée) */}
       <div
         className="absolute inset-0"
         style={{
@@ -9,11 +11,24 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Decorative circles */}
-      <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full opacity-20"
-           style={{ background: "radial-gradient(circle, #78716c, transparent)" }} />
-      <div className="absolute bottom-1/3 left-1/5 w-96 h-96 rounded-full opacity-10"
-           style={{ background: "radial-gradient(circle, #e8d5c4, transparent)" }} />
+      {/* Photo principale — bandeau LED arrondi */}
+      <Image
+        src="/backgrounds/hero-led.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+
+      {/* Layer pour garder le contenu bien lisible (pas trop chargé) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(250,246,241,0.65) 0%, rgba(250,246,241,0.55) 50%, rgba(232,213,196,0.63) 100%)",
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">

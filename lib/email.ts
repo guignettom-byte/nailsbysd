@@ -56,7 +56,7 @@ export async function sendConfirmationEmail(data: AppointmentData) {
         </div>
         <p style="text-align: center; color: #888; font-size: 12px; margin-top: 30px;">
           Nailsbysd — Cheseaux-sur-Lausanne, Suisse<br>
-          <a href="https://www.instagram.com/nailsbysd" style="color: #78716c;">@nailsbysd</a>
+          <a href="https://www.instagram.com/nailsbyysd" style="color: #78716c;">@nailsbyysd</a>
         </p>
       </div>
     `,

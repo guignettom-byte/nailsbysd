@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { formatPrice, formatDuration } from "@/lib/utils";
 import { Sparkles, RefreshCw, Palette, Scissors } from "lucide-react";
 
@@ -48,8 +49,18 @@ export default function ServicesSection({ services }: ServicesProps) {
     : DEFAULT_SERVICES;
 
   return (
-    <section id="prestations" className="py-24 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="prestations" className="relative py-24 px-6 bg-white overflow-hidden">
+      {/* Photo de fond + layer */}
+      <Image
+        src="/backgrounds/salon-1.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-white/75" />
+
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.4em] uppercase text-[#78716c] mb-4 font-body">Savoir-faire</p>
@@ -58,13 +69,13 @@ export default function ServicesSection({ services }: ServicesProps) {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#e8d5c4]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {displayServices.map((service, i) => {
             const Icon = service.icon;
             return (
               <div
                 key={i}
-                className="bg-white p-10 group hover:bg-[#faf6f1] transition-colors duration-300"
+                className="bg-white/45 backdrop-blur-md border border-white/50 rounded-2xl shadow-[0_8px_30px_rgba(42,32,24,0.08)] p-10 group hover:bg-white/60 transition-colors duration-300"
               >
                 <div className="flex items-start gap-6">
                   <div className="w-10 h-10 flex items-center justify-center text-[#78716c] group-hover:scale-110 transition-transform shrink-0 mt-1">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { DayPicker } from "react-day-picker";
 import { fr } from "date-fns/locale";
@@ -161,8 +162,18 @@ export default function BookingSection({ services }: BookingSectionProps) {
   }
 
   return (
-    <section id="reservation" className="py-24 px-6 bg-[#faf6f1]">
-      <div className="max-w-3xl mx-auto">
+    <section id="reservation" className="relative py-24 px-6 bg-[#faf6f1] overflow-hidden">
+      {/* Photo de fond + layer */}
+      <Image
+        src="/backgrounds/salon-2.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[#faf6f1]/75" />
+
+      <div className="relative z-10 max-w-3xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.4em] uppercase text-[#78716c] mb-4 font-body">En ligne, 24h/24</p>
           <h2 className="font-display text-5xl md:text-6xl text-[#2a2018] mb-6">Réserver</h2>
@@ -178,7 +189,7 @@ export default function BookingSection({ services }: BookingSectionProps) {
             onReset={() => { setStep("service"); setSelectedService(null); setSelectedDate(undefined); setSelectedTime(""); setComment(""); }}
           />
         ) : (
-          <div className="bg-white p-8 md:p-12">
+          <div className="bg-white/55 backdrop-blur-md border border-white/55 rounded-2xl shadow-[0_8px_30px_rgba(42,32,24,0.08)] p-8 md:p-12">
             {/* Auth banner */}
             {!isLoggedIn && authStatus !== "loading" && (
               <div className="mb-8 flex items-center justify-between gap-4 bg-[#faf6f1] px-5 py-4 border border-[#e8d5c4]">
@@ -390,7 +401,7 @@ function SuccessView({ service, date, time, clientName, onReset }: {
   service: Service; date: Date; time: string; clientName: string; onReset: () => void;
 }) {
   return (
-    <div className="bg-white p-12 text-center">
+    <div className="bg-white/55 backdrop-blur-md border border-white/55 rounded-2xl shadow-[0_8px_30px_rgba(42,32,24,0.08)] p-12 text-center">
       <div className="flex justify-center mb-6">
         <CheckCircle size={48} className="text-[#78716c]" strokeWidth={1} />
       </div>

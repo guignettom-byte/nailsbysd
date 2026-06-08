@@ -64,7 +64,7 @@ export default function Navbar() {
             </Link>
           )}
 
-          <a href="https://www.instagram.com/nailsbysd" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.instagram.com/nailsbyysd?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer"
             className="text-[#2a2018]/50 hover:text-[#78716c] transition-colors">
             <InstagramIcon size={18} />
           </a>
