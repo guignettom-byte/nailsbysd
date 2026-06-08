@@ -7,6 +7,8 @@ import { addMinutes } from "date-fns";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getToken } from "next-auth/jwt";
+import { logger } from "@/lib/logger";
+import { createAppointmentSchema } from "@/lib/validations/appointment";
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,12 +18,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Connexion requise", redirect: "/connexion" }, { status: 401 });
     }
 
-    const body = await req.json();
-    const { serviceId, date: dateStr, comment } = body;
-
-    if (!serviceId || !dateStr) {
-      return NextResponse.json({ error: "Champs obligatoires manquants" }, { status: 400 });
+    const parsed = createAppointmentSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message ?? "Données invalides" },
+        { status: 400 },
+      );
     }
+    const { serviceId, date: dateStr, comment } = parsed.data;
 
     const client = await prisma.client.findUnique({ where: { id: token.userId as string } });
     if (!client) return NextResponse.json({ error: "Client introuvable" }, { status: 404 });
@@ -60,19 +64,19 @@ export async function POST(req: NextRequest) {
     };
 
     Promise.all([
-      sendConfirmationEmail(emailData).catch(console.error),
-      sendAdminNotification(emailData).catch(console.error),
+      sendConfirmationEmail(emailData).catch((e) => logger.error("Confirmation email failed", e, { appointmentId: appointment.id })),
+      sendAdminNotification(emailData).catch((e) => logger.error("Admin notification failed", e, { appointmentId: appointment.id })),
       createCalendarEvent({
         summary: `RDV — ${client.firstName} ${client.lastName} (${service.name})`,
         description: `Tel: ${client.phone}\nEmail: ${client.email}${comment ? `\nNote: ${comment}` : ""}`,
         startTime: date,
         endTime,
-      }).catch(console.error),
+      }).catch((e) => logger.error("Calendar event failed", e, { appointmentId: appointment.id })),
     ]);
 
     return NextResponse.json({ success: true, id: appointment.id });
   } catch (error) {
-    console.error("Appointment creation error:", error);
+    logger.error("Appointment creation error", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

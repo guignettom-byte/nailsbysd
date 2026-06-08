@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin-guard";
 import { del } from "@vercel/blob";
+import { logger } from "@/lib/logger";
 
 export async function DELETE(
   _req: NextRequest,
@@ -15,7 +16,7 @@ export async function DELETE(
   if (!photo) return NextResponse.json({ error: "Introuvable" }, { status: 404 });
 
   // Delete from Vercel Blob
-  await del(photo.url).catch(console.error);
+  await del(photo.url).catch((e) => logger.error("Blob deletion failed", e, { photoId: id }));
 
   await prisma.photo.delete({ where: { id } });
   return NextResponse.json({ success: true });

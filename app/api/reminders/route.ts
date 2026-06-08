@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { sendReminderEmail } from "@/lib/email";
 import { sendReminderSMS } from "@/lib/sms";
 import { addHours } from "date-fns";
+import { logger } from "@/lib/logger";
 
 export async function POST(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
       });
       await prisma.appointment.update({ where: { id: appt.id }, data: { reminderSent: true } });
     } catch (e) {
-      console.error(`Email reminder failed for ${appt.id}:`, e);
+      logger.error("Email reminder failed", e, { appointmentId: appt.id });
     }
   }
 
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest) {
       await sendReminderSMS(appt.client.phone, appt.client.firstName, appt.date, appt.service.name);
       await prisma.appointment.update({ where: { id: appt.id }, data: { smsSent: true } });
     } catch (e) {
-      console.error(`SMS reminder failed for ${appt.id}:`, e);
+      logger.error("SMS reminder failed", e, { appointmentId: appt.id });
     }
   }
 

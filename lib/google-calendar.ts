@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 export async function createCalendarEvent(params: {
   summary: string;
   description?: string;
@@ -27,7 +29,7 @@ export async function createCalendarEvent(params: {
     });
     return event.data.id ?? null;
   } catch (error) {
-    console.error("Google Calendar error:", error);
+    logger.error("Google Calendar error", error);
     return null;
   }
 }
@@ -50,6 +52,6 @@ export async function deleteCalendarEvent(eventId: string): Promise<void> {
       eventId,
     });
   } catch (error) {
-    console.error("Google Calendar delete error:", error);
+    logger.error("Google Calendar delete error", error);
   }
 }
